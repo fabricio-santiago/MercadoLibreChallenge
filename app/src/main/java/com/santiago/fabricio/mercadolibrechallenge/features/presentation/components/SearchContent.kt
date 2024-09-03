@@ -22,9 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import com.santiago.fabricio.mercadolibrechallenge.R
+import com.santiago.fabricio.mercadolibrechallenge.core.components.AsyncAvatarImage
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 import com.santiago.fabricio.mercadolibrechallenge.theme.yellow
 
@@ -35,6 +39,8 @@ fun SearchContent(
     viewModel: ResultsViewModel
 ) {
     var text by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -43,6 +49,19 @@ fun SearchContent(
             .padding(24.dp)
             .fillMaxSize(),
     ) {
+        AsyncAvatarImage(
+            dataUrl = "https://seeklogo.com/images/M/mercado-libre-logo-7848A94FE8-seeklogo.com.png",
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .clearAndSetSemantics {
+                    contentDescription =
+                        context.getString(R.string.search_content_image)
+                },
+            size = 250,
+            verticalPadding = 32,
+            horizontalPadding = 32
+        )
+
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },

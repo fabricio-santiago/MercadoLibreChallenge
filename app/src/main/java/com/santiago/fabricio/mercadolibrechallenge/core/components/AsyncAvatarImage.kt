@@ -25,13 +25,14 @@ fun AsyncAvatarImage(
     dataUrl: String,
     modifier: Modifier,
     size: Int,
-    padding: Int
+    verticalPadding: Int,
+    horizontalPadding: Int
 ) {
     Surface(
         modifier = modifier
-            .padding(padding.dp)
+            .padding(vertical = verticalPadding.dp, horizontal = horizontalPadding.dp)
             .size(size.dp),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(8.dp),
     )
     {
         AsyncImage(
@@ -45,7 +46,7 @@ fun AsyncAvatarImage(
             modifier = modifier
                 .fillMaxWidth()
                 .background(Color.White)
-                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+                .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
                 .clearAndSetSemantics {
                     contentDescription = contentDescription
                 },

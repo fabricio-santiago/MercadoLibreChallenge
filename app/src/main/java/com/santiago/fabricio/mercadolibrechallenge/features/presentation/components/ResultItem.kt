@@ -70,7 +70,8 @@ fun LocationItem(
                             context.getString(R.string.result_item_image)
                     },
                 size = 80,
-                padding = 12,
+                verticalPadding = 12,
+                horizontalPadding = 12,
             )
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(

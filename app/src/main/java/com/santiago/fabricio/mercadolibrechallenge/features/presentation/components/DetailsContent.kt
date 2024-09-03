@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -47,8 +48,9 @@ fun DetailContent(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 24.dp, vertical = 24.dp)
                 .verticalScroll(rememberScrollState())
+                .fillMaxSize()
         ) {
             AsyncAvatarImage(
                 dataUrl = product?.thumbnail ?: "",
@@ -58,8 +60,9 @@ fun DetailContent(
                         contentDescription =
                             context.getString(R.string.details_content_image)
                     },
-                size = 300,
-                padding = 82
+                size = 250,
+                verticalPadding = 56,
+                horizontalPadding = 16
             )
             Text(
                 text = product?.title ?: "",
@@ -86,7 +89,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Quantidade %s", product?.availableQuantity),
+                text = String.format("Quantidade: %s", product?.availableQuantity),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -98,7 +101,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Aceita mercado pago? %s", (if (product?.acceptsMercadopago == true)  "Sim" else "Não")),
+                text = String.format("Aceita mercado pago?: %s", (if (product?.acceptsMercadopago == true)  "Sim" else "Não")),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {

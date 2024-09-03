@@ -85,7 +85,7 @@ fun ResultsContent(
                             span = { GridItemSpan(maxLineSpan) }
                         ) {
                             ErrorView(
-                                message = stringResource(id = 0),
+                                message = stringResource(id = R.string.results_content_error_message),
                                 retry = {
                                     retry()
                                 })
@@ -97,7 +97,7 @@ fun ResultsContent(
                             span = { GridItemSpan(maxLineSpan) }
                         ) {
                             ErrorView(
-                                message = stringResource(id = 0),
+                                message = stringResource(id = R.string.results_content_error_message),
                                 retry = {
                                     retry()
                                 })

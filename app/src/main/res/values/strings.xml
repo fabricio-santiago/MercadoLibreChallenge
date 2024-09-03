@@ -5,13 +5,14 @@
     <string name="search_screen_title_app_bar">Pesquisar Produtos</string>
 
     //SearchContent
-    <string name="search_content_description_lazy_vertical_grid">Responsável por listar todos os personagens</string>
+    <string name="search_content_image">Imagem do produto</string>
 
     //ResultsScreen
     <string name="results_screen_title_app_bar">Resultados da pesquisa</string>
 
     //ResultsContent
     <string name="results_content_description_lazy_vertical_grid">Responsável por listar todos os produtos da busca</string>
+    <string name="results_content_error_message">Ops! Tivemos um problema na pesquisa</string>
 
     //ResultItem
     <string name="result_item_description_outlined_card">Responsável por representar o Card de cada produto.</string>
@@ -34,9 +35,9 @@
     <string name="details_content_date">Date limite de venda do produto</string>
 
     //Components
-    <string name="error_view_button_text">Recarregar</string>
+    <string name="error_view_button_text">Tentar Novamente</string>
     <string name="search_label">Digite o produto</string>
     <string name="search_button_text">Pesquisar</string>
-    <string name="empty_data_screen_description">No data</string>
+    <string name="empty_data_screen_description">Nenhum produto encontrado</string>
 
 </resources>

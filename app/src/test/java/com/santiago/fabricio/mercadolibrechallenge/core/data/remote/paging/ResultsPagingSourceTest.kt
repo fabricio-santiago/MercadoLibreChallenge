@@ -6,9 +6,9 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.santiago.fabricio.mercadolibrechallenge.TestDispatcherRule
 import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.SafeApiCaller
-import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.LocationsFactory
+import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.SearchResponseFactory
 import com.santiago.fabricio.mercadolibrechallenge.features.data.mapper.toRepository
-import com.santiago.fabricio.mercadolibrechallenge.features.domain.source.LocationsRemoteDataSource
+import com.santiago.fabricio.mercadolibrechallenge.features.domain.source.ResultsRemoteDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
@@ -18,32 +18,32 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class LocationsPagingSourceTest {
+class ResultsPagingSourceTest {
 
     @get:Rule
     val dispatcherRule = TestDispatcherRule()
 
     @Mock
-    lateinit var remoteDataSource: LocationsRemoteDataSource
+    lateinit var remoteDataSource: ResultsRemoteDataSource
 
     @Mock
     lateinit var safeApiCaller: SafeApiCaller
 
-    private val locationsPagingFactory = LocationsFactory.create()
+    private val locationsPagingFactory = SearchResponseFactory.create()
 
 
-    private val locationsPagingSource by lazy {
-        LocationsPageSource(remoteDataSource = remoteDataSource, safeApiCaller = safeApiCaller)
+    private val resultsPagingSource by lazy {
+        ResultPageSource(remoteDataSource = remoteDataSource, safeApiCaller = safeApiCaller)
     }
 
     @Test
     suspend fun `must return success load result when load is called`() {
 
         //Given
-        whenever(remoteDataSource.getLocations(any())).thenReturn(locationsPagingFactory)
+        whenever(remoteDataSource.getResults(any(), any())).thenReturn(locationsPagingFactory)
 
         //When
-        val result = locationsPagingSource.load(
+        val result = resultsPagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = null,
                 loadSize = 20,
@@ -52,7 +52,7 @@ class LocationsPagingSourceTest {
         )
 
         val resultExpected = listOf(
-            LocationsFactory.create().results.toRepository()
+            SearchResponseFactory.create().results.toRepository()
         )
 
         //Then

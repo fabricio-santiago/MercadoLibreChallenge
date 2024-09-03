@@ -13,8 +13,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import com.google.common.truth.Truth.assertThat
-import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.CharactersFactory
-import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.CharactersUseCase
+import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.SearchResponseFactory
+import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.ResultsUseCase
+import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 import kotlinx.coroutines.test.runTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -25,26 +26,26 @@ class ResultsViewModelTest {
     val dispatcherRule = TestDispatcherRule()
 
     @Mock
-    lateinit var charactersUseCase: CharactersUseCase
+    lateinit var resultsUseCase: ResultsUseCase
 
     private val viewModel by lazy {
-        CharactersViewModel(charactersUseCase = charactersUseCase)
+        ResultsViewModel(resultsUseCase = resultsUseCase)
     }
 
-    private val fakePagingDataCharacters = PagingData.from(
-        CharactersFactory.create().results.toRepository()
+    private val fakePagingDataResults = PagingData.from(
+        SearchResponseFactory.create().results.toRepository()
     )
 
     @Test
     fun `must validate paging data object values when calling paging data from characters`() =
         runTest {
             //Given
-            whenever(charactersUseCase.invoke()).thenReturn(
-                flowOf(fakePagingDataCharacters)
+            whenever(resultsUseCase.invoke()).thenReturn(
+                flowOf(fakePagingDataResults)
             )
 
             //When
-            val result = viewModel.uiState.characters.first()
+            val result = viewModel.resultsState.results.first()
 
             //Then
             assertThat(result).isNotNull()
@@ -54,12 +55,12 @@ class ResultsViewModelTest {
     fun `must thrown an exception when the calling to the use case return an exception`() =
         runTest {
             //Given
-            whenever(charactersUseCase.invoke()).thenThrow(RuntimeException())
+            whenever(resultsUseCase.invoke()).thenThrow(RuntimeException())
 
             //When
-            val result = viewModel.uiState.characters
+            val result = viewModel.resultsState.results
 
             //Then
-            assertThat(result).isNotSameInstanceAs(fakePagingDataCharacters)
+            assertThat(result).isNotSameInstanceAs(fakePagingDataResults)
         }
 }

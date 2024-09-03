@@ -17,7 +17,6 @@ fun NavGraphBuilder.searchScreen(
         SearchScreen(
             navigateToResults = { navHostController.navigateToResultsScreen() },
         )
-
     }
 }
 

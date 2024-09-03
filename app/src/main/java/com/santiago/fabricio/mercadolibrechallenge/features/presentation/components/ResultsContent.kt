@@ -48,7 +48,7 @@ fun ResultsContent(
                 .fillMaxSize()
                 .clearAndSetSemantics {
                     contentDescription =
-                        context.getString(R.string.locations_content_description_lazy_vertical_grid)
+                        context.getString(R.string.results_content_description_lazy_vertical_grid)
                 }
         ) {
             items(pagingResults.itemCount) { index ->

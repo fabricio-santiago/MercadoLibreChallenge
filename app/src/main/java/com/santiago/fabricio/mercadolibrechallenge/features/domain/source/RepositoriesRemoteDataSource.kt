@@ -5,5 +5,5 @@ import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.response.Sea
 
 interface ResultsRemoteDataSource {
     fun getResultsPageSource(): ResultPageSource
-    suspend fun getResults(page: Int): SearchResponse
+    suspend fun getResults(page: Int, searchText: String): SearchResponse
 }

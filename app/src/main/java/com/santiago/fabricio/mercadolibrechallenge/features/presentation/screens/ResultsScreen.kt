@@ -25,7 +25,7 @@ fun ResultsScreen(
 
     Scaffold(topBar = {
         CustomAppBar(
-            title = stringResource(id = R.string.search_screen_title_app_bar),
+            title = stringResource(id = R.string.results_screen_title_app_bar),
             showAppBarButton = true,
             onBackButtonClick = { navigateToSearch() }
         )

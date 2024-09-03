@@ -1,19 +1,18 @@
-# Rick and Morty App
+# Mercado Libre Challenge App
 
-This project was created to reinforce knowledge in Kotlin + Compose, using a free API about the series Rick and Morty
+## SearchScreen
 
-I utilized Jetpack Compose in this project and followed the best practices to developer the app's behaviors.
+- Search field for searching for products sold on Mercado Libre.
 
-## CharactersScreen
+## ResultsScreen
 
-- List all characters with infinite scroll and increasing the page parameter.
-- Navigate you to LocationsScreen when you touch on CharacterItem
+- List all products with infinite scroll, displaying thumbnail, description and price.
+- CustomAppBar with back button for navigate back to SearchScreen.
 
-## LocationsScreen
+## DetailsScreen
 
-- List all locations with infinite scroll and increasing the page parameter.
-- CustomAppBar with back button for navigate back to CharactersScreen.
-
+- Details information about the product, such as image, price, shipping, quantity and seller.
+- CustomAppBar with back button for navigate back to ResultsScreen.
 
 ### Core Libraries
 

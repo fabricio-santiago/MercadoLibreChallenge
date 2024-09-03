@@ -33,7 +33,7 @@ class ResultPageSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         val pageNumber = params.key ?: 1
         safeApiCaller.safeApiCall {
-            remoteDataSource.getResults(pageNumber)
+            remoteDataSource.getResults(pageNumber, "Motorola%20G6")
         }.onSuccess { response ->
             Timber.tag("SUCCESS").e(response.toString());
             return LoadResult.Page(

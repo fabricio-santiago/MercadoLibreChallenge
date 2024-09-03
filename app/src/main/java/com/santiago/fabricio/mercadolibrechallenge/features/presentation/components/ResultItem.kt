@@ -18,9 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,12 +37,8 @@ fun LocationItem(
     index: Int,
     navHostController: NavController,
 ) {
-
     val context = LocalContext.current
 
-    val expanded by remember {
-        mutableStateOf(false)
-    }
     OutlinedCard(
         modifier = Modifier
             .padding(4.dp)
@@ -55,7 +48,7 @@ fun LocationItem(
             }
             .clearAndSetSemantics {
                 contentDescription =
-                    context.getString(R.string.locations_item_description_outlined_card)
+                    context.getString(R.string.result_item_description_outlined_card)
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -74,7 +67,7 @@ fun LocationItem(
                     .align(Alignment.CenterVertically)
                     .clearAndSetSemantics {
                         contentDescription =
-                            context.getString(R.string.characters_item_description_avatar_image)
+                            context.getString(R.string.result_item_image)
                     },
                 size = 80,
                 padding = 12,
@@ -86,7 +79,7 @@ fun LocationItem(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clearAndSetSemantics {
                         contentDescription =
-                            context.getString(R.string.locations_item_description_name)
+                            context.getString(R.string.result_item_description)
                     }
                 )
 
@@ -98,9 +91,8 @@ fun LocationItem(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clearAndSetSemantics {
                         contentDescription =
-                            context.getString(R.string.locations_item_description_type)
+                            context.getString(R.string.result_item_price)
                     },
-                    maxLines = if (!expanded) 4 else Int.MAX_VALUE
                 )
             }
         }

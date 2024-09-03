@@ -15,7 +15,7 @@ class ResultsRemoteDataSourceImpl @Inject constructor(
         return ResultPageSource(this, safeApiCaller)
     }
 
-    override suspend fun getResults(page: Int): SearchResponse {
-        return service.getResults()
+    override suspend fun getResults(page: Int, searchText: String): SearchResponse {
+        return service.getResults(page, searchText)
     }
 }

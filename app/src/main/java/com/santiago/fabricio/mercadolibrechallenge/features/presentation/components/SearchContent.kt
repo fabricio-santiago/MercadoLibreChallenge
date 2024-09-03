@@ -25,12 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.santiago.fabricio.mercadolibrechallenge.R
+import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 import com.santiago.fabricio.mercadolibrechallenge.theme.yellow
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SearchContent(
     navigateToResults: () -> Unit,
+    viewModel: ResultsViewModel
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     Column(
@@ -49,7 +51,12 @@ fun SearchContent(
 
         Spacer(modifier = Modifier.size(32.dp))
 
-        Button(onClick = navigateToResults, colors = ButtonDefaults.buttonColors(yellow)) {
+        Button(
+            onClick = {
+                viewModel.getResults(text)
+                navigateToResults()
+            },
+            colors = ButtonDefaults.buttonColors(yellow)) {
             Text(
                 text = stringResource(R.string.search_button_text),
                 color = MaterialTheme.colorScheme.secondary

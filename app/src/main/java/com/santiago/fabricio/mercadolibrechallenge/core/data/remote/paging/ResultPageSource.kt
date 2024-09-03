@@ -15,7 +15,8 @@ import timber.log.Timber
 
 class ResultPageSource(
     private val remoteDataSource: ResultsRemoteDataSource,
-    private val safeApiCaller: SafeApiCaller
+    private val safeApiCaller: SafeApiCaller,
+    private val searchText: String
 ) : PagingSource<Int, Result>() {
 
     companion object {
@@ -33,7 +34,7 @@ class ResultPageSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         val pageNumber = params.key ?: 1
         safeApiCaller.safeApiCall {
-            remoteDataSource.getResults(pageNumber, "Motorola%20G6")
+            remoteDataSource.getResults(pageNumber, searchText)
         }.onSuccess { response ->
             Timber.tag("SUCCESS").e(response.toString());
             return LoadResult.Page(

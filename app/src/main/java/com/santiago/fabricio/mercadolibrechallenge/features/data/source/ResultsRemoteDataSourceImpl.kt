@@ -11,8 +11,8 @@ class ResultsRemoteDataSourceImpl @Inject constructor(
     private val service: ResultsService,
     private val safeApiCaller: SafeApiCaller
 ) : ResultsRemoteDataSource {
-    override fun getResultsPageSource(): ResultPageSource {
-        return ResultPageSource(this, safeApiCaller)
+    override fun getResultsPageSource(searchText: String): ResultPageSource {
+        return ResultPageSource(this, safeApiCaller, searchText)
     }
 
     override suspend fun getResults(page: Int, searchText: String): SearchResponse {

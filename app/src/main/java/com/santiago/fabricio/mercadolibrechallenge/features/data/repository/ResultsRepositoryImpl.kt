@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.Flow
 class ResultsRepositoryImpl(
     private val remoteDataSource: ResultsRemoteDataSource
 ) : ResultsRepository {
-    override fun getResults(pagingConfig: PagingConfig): Flow<PagingData<Result>> {
+    override fun getResults(pagingConfig: PagingConfig, searchText: String): Flow<PagingData<Result>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
-                remoteDataSource.getResultsPageSource()
+                remoteDataSource.getResultsPageSource(searchText)
             }
         ).flow
     }

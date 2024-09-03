@@ -33,7 +33,7 @@ class ResultsPagingSourceTest {
 
 
     private val resultsPagingSource by lazy {
-        ResultPageSource(remoteDataSource = remoteDataSource, safeApiCaller = safeApiCaller)
+        ResultPageSource(remoteDataSource = remoteDataSource, safeApiCaller = safeApiCaller, searchText = "")
     }
 
     @Test

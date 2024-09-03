@@ -4,6 +4,6 @@ import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.paging.Resul
 import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.response.SearchResponse
 
 interface ResultsRemoteDataSource {
-    fun getResultsPageSource(): ResultPageSource
+    fun getResultsPageSource(searchText: String): ResultPageSource
     suspend fun getResults(page: Int, searchText: String): SearchResponse
 }

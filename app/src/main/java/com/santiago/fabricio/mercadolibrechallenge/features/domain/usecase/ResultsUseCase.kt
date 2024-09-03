@@ -10,18 +10,19 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 interface ResultsUseCase {
-    operator fun invoke(): Flow<PagingData<Result>>
+    operator fun invoke(searchText: String): Flow<PagingData<Result>>
 }
 
 class ResultsUseCaseImpl @Inject constructor(
     private val repository: ResultsRepository
 ) : ResultsUseCase {
-    override fun invoke(): Flow<PagingData<Result>> {
+    override fun invoke(searchText: String): Flow<PagingData<Result>> {
         return repository.getResults(
             pagingConfig = PagingConfig(
                 pageSize = 20,
                 initialLoadSize = 20
-            )
+            ),
+            searchText = searchText,
         ).flowOn(Dispatchers.IO)
     }
 }

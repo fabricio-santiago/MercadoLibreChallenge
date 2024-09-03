@@ -20,13 +20,9 @@ class ResultsViewModel @Inject constructor(
     var resultsState by mutableStateOf(ResultsState())
         private set
 
-    init {
-        getResults()
-    }
-
-     private fun getResults() {
+        fun getResults(searchText: String) {
          try {
-             val results = resultsUseCase.invoke().cachedIn(viewModelScope)
+             val results = resultsUseCase.invoke(searchText).cachedIn(viewModelScope)
              resultsState = resultsState.copy(results = results)
          } catch (e: Exception){
              resultsState = resultsState.copy(results = flowOf())

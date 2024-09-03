@@ -13,6 +13,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.any
 import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.SearchResponseFactory
 import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.ResultsUseCase
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
@@ -40,7 +41,7 @@ class ResultsViewModelTest {
     fun `must validate paging data object values when calling paging data from characters`() =
         runTest {
             //Given
-            whenever(resultsUseCase.invoke()).thenReturn(
+            whenever(resultsUseCase.invoke(any())).thenReturn(
                 flowOf(fakePagingDataResults)
             )
 
@@ -55,7 +56,7 @@ class ResultsViewModelTest {
     fun `must thrown an exception when the calling to the use case return an exception`() =
         runTest {
             //Given
-            whenever(resultsUseCase.invoke()).thenThrow(RuntimeException())
+            whenever(resultsUseCase.invoke(any())).thenThrow(RuntimeException())
 
             //When
             val result = viewModel.resultsState.results

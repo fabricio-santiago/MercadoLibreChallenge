@@ -21,7 +21,7 @@ fun MainNavigationGraph(
         navController = navHostController,
         startDestination = searchScreenRoute,
     ) {
-        searchScreen(navHostController = navHostController)
+        searchScreen(navHostController = navHostController, viewModel = viewModel)
         resultsScreen(navHostController = navHostController, uiState = uiState)
         detailsScreen(navHostController = navHostController, uiState = uiState)
     }

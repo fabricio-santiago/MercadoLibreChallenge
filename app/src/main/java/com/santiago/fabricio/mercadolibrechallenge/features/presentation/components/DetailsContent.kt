@@ -98,7 +98,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Aceita mercado pago? %s", product?.acceptsMercadopago),
+                text = String.format("Aceita mercado pago? %s", (if (product?.acceptsMercadopago == true)  "Sim" else "Não")),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -122,7 +122,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Frete grátis?: %s", product?.shipping?.freeShipping),
+                text = String.format("Frete grátis?: %s", if (product?.shipping?.freeShipping  == true)  "Sim" else "Não"),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {

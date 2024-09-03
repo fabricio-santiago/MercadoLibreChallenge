@@ -6,16 +6,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.screens.SearchScreen
+import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 
 const val searchScreenRoute = "searchScreenRoute"
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.searchScreen(
-    navHostController: NavController
+    navHostController: NavController,
+    viewModel: ResultsViewModel,
 ) {
     composable(searchScreenRoute) {
         SearchScreen(
             navigateToResults = { navHostController.navigateToResultsScreen() },
+            viewModel = viewModel
         )
     }
 }

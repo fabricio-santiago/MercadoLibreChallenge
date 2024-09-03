@@ -6,5 +6,5 @@ import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Result
 import kotlinx.coroutines.flow.Flow
 
 interface ResultsRepository {
-    fun getResults(pagingConfig: PagingConfig): Flow<PagingData<Result>>
+    fun getResults(pagingConfig: PagingConfig, searchText: String): Flow<PagingData<Result>>
 }

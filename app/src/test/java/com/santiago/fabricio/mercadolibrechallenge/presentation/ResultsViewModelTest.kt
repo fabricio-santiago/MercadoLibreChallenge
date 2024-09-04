@@ -11,6 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.any
 import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.ResultData
+import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.SearchDataFactory
+import com.santiago.fabricio.mercadolibrechallenge.features.data.mapper.toSearchList
 import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.ResultsUseCase
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 import kotlinx.coroutines.test.runTest
@@ -29,14 +31,15 @@ class ResultsViewModelTest {
         ResultsViewModel(resultsUseCase = resultsUseCase)
     }
 
-    private val fakeDataResults =
+    private val fakeResults =
+        SearchDataFactory.create(SearchDataFactory())
 
     @Test
-    fun `must validate paging data object values when calling paging data from characters`() =
+    fun `must validate data object values when calling data from products result`() =
         runTest {
             //Given
             whenever(resultsUseCase.invoke(any())).thenReturn(
-                fakeDataResults
+                ResultData.Success(fakeResults.toSearchList())
             )
 
             //When
@@ -53,9 +56,9 @@ class ResultsViewModelTest {
             whenever(resultsUseCase.invoke(any())).thenThrow(RuntimeException())
 
             //When
-            val result = viewModel.uiState
+            val result = viewModel.uiState.value
 
             //Then
-            assertThat(result).isNotSameInstanceAs(fakeDataResults)
+            assertThat(result).isNotSameInstanceAs(ResultData.Success(fakeResults.toSearchList()))
         }
 }

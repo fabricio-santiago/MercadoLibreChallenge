@@ -9,9 +9,7 @@ class SearchResponseFactory {
             SearchResponse(
                 siteId = "any siteId",
                 paging = PagingFactory.create(),
-                results = listOf(
-                    SearchDataFactory.create()
-                )
+                results = SearchDataFactory.create(SearchDataFactory())
             )
         }
     }

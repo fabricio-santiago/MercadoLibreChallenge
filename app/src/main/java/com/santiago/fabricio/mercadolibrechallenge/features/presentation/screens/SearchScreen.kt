@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.components.SearchContent
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 
@@ -14,12 +15,14 @@ import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmod
 fun SearchScreen(
     navigateToResults: () -> Unit,
     viewModel: ResultsViewModel,
+    navHostController: NavController,
 ) {
     Scaffold(
         content = {
             SearchContent(
                 navigateToResults = navigateToResults,
-                viewModel = viewModel
+                viewModel = viewModel,
+                navHostController = navHostController
             )
         }
     )

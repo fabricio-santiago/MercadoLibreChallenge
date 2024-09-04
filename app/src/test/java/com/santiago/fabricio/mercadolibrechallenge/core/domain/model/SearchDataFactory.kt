@@ -1,12 +1,13 @@
 package com.santiago.fabricio.mercadolibrechallenge.core.domain.model
 
-import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Result
 
-class ResultFactory {
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
+
+class SearchDataFactory {
 
     companion object {
         fun create() = run {
-            Result(
+            SearchData(
                 id = "any id",
                 siteId = "any siteId",
                 title = "any title",

@@ -25,16 +25,16 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.gson.Gson
 import com.santiago.fabricio.mercadolibrechallenge.R
 import com.santiago.fabricio.mercadolibrechallenge.core.components.AsyncAvatarImage
-import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Result
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
 import com.santiago.fabricio.mercadolibrechallenge.core.navigation.navigateToDetailScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LocationItem(
-    location: Result,
-    index: Int,
+    searchData: SearchData,
     navHostController: NavController,
 ) {
     val context = LocalContext.current
@@ -44,7 +44,8 @@ fun LocationItem(
             .padding(4.dp)
             .fillMaxWidth()
             .clickable {
-                navHostController.navigateToDetailScreen(index)
+                navHostController.currentBackStackEntry?.savedStateHandle?.set("product", Gson().toJson(searchData))
+                navHostController.navigateToDetailScreen()
             }
             .clearAndSetSemantics {
                 contentDescription =
@@ -62,7 +63,7 @@ fun LocationItem(
             horizontalArrangement = Arrangement.Start
         ) {
             AsyncAvatarImage(
-                dataUrl = location.thumbnail,
+                dataUrl = searchData.thumbnail,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .clearAndSetSemantics {
@@ -75,7 +76,7 @@ fun LocationItem(
             )
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(
-                    text = location.title,
+                    text = searchData.title,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clearAndSetSemantics {
@@ -87,7 +88,7 @@ fun LocationItem(
                 Spacer(modifier = Modifier.size(8.dp))
 
                 Text(
-                    text = String.format("Preço: R$ %s", location.price),
+                    text = String.format("Preço: R$ %s", searchData.price),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clearAndSetSemantics {

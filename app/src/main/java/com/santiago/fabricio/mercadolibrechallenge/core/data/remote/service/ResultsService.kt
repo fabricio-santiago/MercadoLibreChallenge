@@ -8,7 +8,6 @@ interface ResultsService {
 
     @GET("sites/MLB/search")
     suspend fun getResults(
-        @Query("page") page: Int,
         @Query("q") q: String,
     ): SearchResponse
 }

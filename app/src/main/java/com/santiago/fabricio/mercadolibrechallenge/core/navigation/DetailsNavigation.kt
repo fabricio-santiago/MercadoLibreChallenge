@@ -4,36 +4,38 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import com.google.gson.Gson
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Installments
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Seller
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Shipping
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.screens.DetailScreen
-import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 
 const val detailsScreenRoute = "detailsScreenRoute"
-const val productArgument = "productArgument"
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.detailsScreen(
     navHostController: NavController,
-    uiState: ResultsState
 ) {
-    composable(route = "${detailsScreenRoute}/{$productArgument}",
-        arguments = listOf(
-            navArgument(productArgument) { type = NavType.IntType },
-        )) { backStackEntry ->
+    composable(route = detailsScreenRoute){
 
-        val product = backStackEntry.arguments?.getInt(productArgument)
+        val product: String? = navHostController.previousBackStackEntry?.savedStateHandle?.get("product")
+
+        val searchData: SearchData = try {
+            Gson().fromJson(product, SearchData::class.java)
+        }catch (e: Exception) {
+            SearchData()
+        }
 
         DetailScreen(
-            uiState = uiState,
-            index = product ?: 0,
+            searchData = searchData,
             navigateToResults = { navHostController.navigateToResultsScreen() }
         )
 
     }
 }
 
-fun NavController.navigateToDetailScreen(productArgument: Int) {
-    navigate(route = "${detailsScreenRoute}/$productArgument")
+fun NavController.navigateToDetailScreen() {
+    navigate(route = detailsScreenRoute)
 }

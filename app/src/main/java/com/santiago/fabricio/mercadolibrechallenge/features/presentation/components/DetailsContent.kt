@@ -23,25 +23,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.santiago.fabricio.mercadolibrechallenge.R
 import com.santiago.fabricio.mercadolibrechallenge.core.components.AsyncAvatarImage
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
 import com.santiago.fabricio.mercadolibrechallenge.core.util.UtilFunctions.formatDateAPI
-import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetailContent(
-    uiState: ResultsState,
-    index: Int,
+    searchData: SearchData?,
     paddingValues: PaddingValues
 ) {
 
     val context = LocalContext.current
-    val results = uiState.results.collectAsLazyPagingItems()
     val modifier = Modifier
 
-    val product = results[index]
     Surface(modifier = modifier.background(MaterialTheme.colorScheme.background)) {
 
         Column(
@@ -53,7 +49,7 @@ fun DetailContent(
                 .fillMaxSize()
         ) {
             AsyncAvatarImage(
-                dataUrl = product?.thumbnail ?: "",
+                dataUrl = searchData?.thumbnail ?: "",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .clearAndSetSemantics {
@@ -65,7 +61,7 @@ fun DetailContent(
                 horizontalPadding = 16
             )
             Text(
-                text = product?.title ?: "",
+                text = searchData?.title ?: "",
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -77,7 +73,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(32.dp))
 
             Text(
-                text = String.format("Preço: R$ %s", product?.price),
+                text = String.format("Preço: R$ %s", searchData?.price),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -89,7 +85,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Quantidade: %s", product?.availableQuantity),
+                text = String.format("Quantidade: %s", searchData?.availableQuantity),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -101,7 +97,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Aceita mercado pago?: %s", (if (product?.acceptsMercadopago == true)  "Sim" else "Não")),
+                text = String.format("Aceita mercado pago?: %s", (if (searchData?.acceptsMercadopago == true)  "Sim" else "Não")),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -113,7 +109,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Vendido por: %s", product?.seller?.nickname),
+                text = String.format("Vendido por: %s", searchData?.seller?.nickname),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -125,7 +121,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Frete grátis?: %s", if (product?.shipping?.freeShipping  == true)  "Sim" else "Não"),
+                text = String.format("Frete grátis?: %s", if (searchData?.shipping?.freeShipping == true)  "Sim" else "Não"),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -137,7 +133,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Classificação: %s", product?.installments?.rate),
+                text = String.format("Classificação: %s", searchData?.installments?.rate),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {
@@ -149,7 +145,7 @@ fun DetailContent(
             Spacer(modifier = Modifier.size(8.dp))
 
             Text(
-                text = String.format("Data limite: %s", product?.stopTime?.formatDateAPI()),
+                text = String.format("Data limite: %s", searchData?.stopTime?.formatDateAPI()),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.clearAndSetSemantics {

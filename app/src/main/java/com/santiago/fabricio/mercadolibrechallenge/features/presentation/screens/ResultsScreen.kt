@@ -7,9 +7,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.santiago.fabricio.mercadolibrechallenge.R
 import com.santiago.fabricio.mercadolibrechallenge.core.components.CustomAppBar
+import com.santiago.fabricio.mercadolibrechallenge.core.components.EmptyDataScreen
+import com.santiago.fabricio.mercadolibrechallenge.core.components.ErrorScreen
+import com.santiago.fabricio.mercadolibrechallenge.core.components.LoadingScreen
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.components.ResultsContent
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 
@@ -20,9 +22,8 @@ fun ResultsScreen(
     uiState: ResultsState,
     navHostController: NavHostController,
     navigateToSearch: () -> Unit,
+    retryRequest: () -> Unit,
 ) {
-    val results = uiState.results.collectAsLazyPagingItems()
-
     Scaffold(topBar = {
         CustomAppBar(
             title = stringResource(id = R.string.results_screen_title_app_bar),
@@ -31,10 +32,28 @@ fun ResultsScreen(
         )
     },
     content = { paddingValues ->
-        ResultsContent(
-            navHostController = navHostController,
-            paddingValues = paddingValues,
-            pagingResults = results,
-        )
+        when (uiState) {
+            is ResultsState.Loading -> {
+                LoadingScreen()
+            }
+
+            is ResultsState.Error -> {
+                ErrorScreen(
+                    message = stringResource(id = R.string.results_content_error_message),
+                    retry = { retryRequest() })
+            }
+
+            is ResultsState.EmptyData -> {
+                EmptyDataScreen()
+            }
+
+            is ResultsState.SuccessUiState -> {
+                ResultsContent(
+                    navHostController = navHostController,
+                    paddingValues = paddingValues,
+                    results = uiState.results,
+                )
+            }
+        }
     })
 }

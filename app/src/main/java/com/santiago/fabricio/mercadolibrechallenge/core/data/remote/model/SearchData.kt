@@ -2,7 +2,7 @@ package com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Result (
+data class SearchData (
     @SerializedName("id")
     val id: String,
     @SerializedName("site_id")
@@ -35,4 +35,23 @@ data class Result (
     val installments: Installments,
     @SerializedName("shipping")
     val shipping: Shipping,
-)
+){
+    constructor() : this(
+        id = "any id",
+        siteId = "any siteId",
+        title = "any title",
+        seller = Seller(0, ""),
+        price = 10.0,
+        currencyId = "any currencyId",
+        availableQuantity = 10,
+        buyingMode = "any buyingMode",
+        listingTypeId = "any listingTypeId",
+        stopTime = "any shopTime",
+        condition = "any condition",
+        permalink = "any permalink",
+        thumbnail = "any thumbnail",
+        acceptsMercadopago = false,
+        installments = Installments(0, 0.0, 0.0 ,""),
+        shipping = Shipping(false, "", listOf(), "", false)
+    )
+}

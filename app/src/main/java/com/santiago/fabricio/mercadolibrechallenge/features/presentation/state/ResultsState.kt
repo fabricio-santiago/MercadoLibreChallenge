@@ -1,11 +1,13 @@
 package com.santiago.fabricio.mercadolibrechallenge.features.presentation.state
 
-import androidx.paging.PagingData
-import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Result
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
 
-data class ResultsState(
-    var results: Flow<PagingData<Result>> = emptyFlow()
-)
+sealed class ResultsState{
+    data object Loading: ResultsState()
+    data object Error: ResultsState()
+    data object EmptyData: ResultsState()
+    data class SuccessUiState(
+        val results: List<SearchData?> = emptyList(),
+    ): ResultsState()
+}
 

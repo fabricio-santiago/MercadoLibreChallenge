@@ -1,15 +1,19 @@
 package com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.onEmpty
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.onError
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.onSuccess
 import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.ResultsUseCase
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,15 +21,32 @@ class ResultsViewModel @Inject constructor(
     private val resultsUseCase: ResultsUseCase
 ) : ViewModel() {
 
-    var resultsState by mutableStateOf(ResultsState())
-        private set
+    private val _uiState = MutableStateFlow<ResultsState>(
+        ResultsState.Loading
+    )
 
-        fun getResults(searchText: String) {
-         try {
-             val results = resultsUseCase.invoke(searchText).cachedIn(viewModelScope)
-             resultsState = resultsState.copy(results = results)
-         } catch (e: Exception){
-             resultsState = resultsState.copy(results = flowOf())
-         }
+    val uiState: StateFlow<ResultsState>
+        get() = _uiState.asStateFlow()
+
+    fun getResults(searchText: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            resultsUseCase.invoke(
+                searchText = searchText
+            ).onSuccess { results ->
+                _uiState.update {
+                    ResultsState.SuccessUiState(
+                        results = results
+                    )
+                }
+            }.onError {
+                _uiState.update {
+                    ResultsState.Error
+                }
+            }.onEmpty {
+                _uiState.update {
+                    ResultsState.EmptyData
+                }
+            }
+        }
     }
 }

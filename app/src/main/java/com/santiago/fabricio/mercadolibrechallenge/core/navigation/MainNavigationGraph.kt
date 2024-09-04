@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -14,15 +13,14 @@ import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmod
 fun MainNavigationGraph(
     navHostController: NavHostController
 ) {
-    val viewModel: ResultsViewModel = hiltViewModel()
-    val uiState: ResultsState = viewModel.resultsState
+    val viewModel: ResultsViewModel = hiltViewModel<ResultsViewModel>()
 
     NavHost(
         navController = navHostController,
         startDestination = searchScreenRoute,
     ) {
         searchScreen(navHostController = navHostController, viewModel = viewModel)
-        resultsScreen(navHostController = navHostController, uiState = uiState)
-        detailsScreen(navHostController = navHostController, uiState = uiState)
+        resultsScreen(navHostController = navHostController, viewModel = viewModel)
+        detailsScreen(navHostController = navHostController)
     }
 }

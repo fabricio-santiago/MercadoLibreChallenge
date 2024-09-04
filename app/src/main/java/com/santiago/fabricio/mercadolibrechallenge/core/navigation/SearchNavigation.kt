@@ -18,7 +18,8 @@ fun NavGraphBuilder.searchScreen(
     composable(searchScreenRoute) {
         SearchScreen(
             navigateToResults = { navHostController.navigateToResultsScreen() },
-            viewModel = viewModel
+            viewModel = viewModel,
+            navHostController = navHostController
         )
     }
 }

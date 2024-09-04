@@ -1,12 +1,8 @@
 package com.santiago.fabricio.mercadolibrechallenge.presentation
 
-import androidx.paging.PagingData
 import com.nhaarman.mockitokotlin2.whenever
 import com.santiago.fabricio.mercadolibrechallenge.TestDispatcherRule
-import com.santiago.fabricio.mercadolibrechallenge.features.data.mapper.toRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,7 +10,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.any
-import com.santiago.fabricio.mercadolibrechallenge.core.domain.model.SearchResponseFactory
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.ResultData
 import com.santiago.fabricio.mercadolibrechallenge.features.domain.usecase.ResultsUseCase
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
 import kotlinx.coroutines.test.runTest
@@ -33,20 +29,18 @@ class ResultsViewModelTest {
         ResultsViewModel(resultsUseCase = resultsUseCase)
     }
 
-    private val fakePagingDataResults = PagingData.from(
-        SearchResponseFactory.create().results.toRepository()
-    )
+    private val fakeDataResults =
 
     @Test
     fun `must validate paging data object values when calling paging data from characters`() =
         runTest {
             //Given
             whenever(resultsUseCase.invoke(any())).thenReturn(
-                flowOf(fakePagingDataResults)
+                fakeDataResults
             )
 
             //When
-            val result = viewModel.resultsState.results.first()
+            val result = viewModel.uiState.value
 
             //Then
             assertThat(result).isNotNull()
@@ -59,9 +53,9 @@ class ResultsViewModelTest {
             whenever(resultsUseCase.invoke(any())).thenThrow(RuntimeException())
 
             //When
-            val result = viewModel.resultsState.results
+            val result = viewModel.uiState
 
             //Then
-            assertThat(result).isNotSameInstanceAs(fakePagingDataResults)
+            assertThat(result).isNotSameInstanceAs(fakeDataResults)
         }
 }

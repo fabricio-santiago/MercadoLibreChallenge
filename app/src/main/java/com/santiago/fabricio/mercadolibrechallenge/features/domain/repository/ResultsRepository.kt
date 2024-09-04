@@ -1,10 +1,8 @@
 package com.santiago.fabricio.mercadolibrechallenge.features.domain.repository
 
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.Result
-import kotlinx.coroutines.flow.Flow
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.service.util.ResultData
 
 interface ResultsRepository {
-    fun getResults(pagingConfig: PagingConfig, searchText: String): Flow<PagingData<Result>>
+    suspend fun getResults(searchText: String): ResultData<List<SearchData?>>
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.santiago.fabricio.mercadolibrechallenge.R
 import com.santiago.fabricio.mercadolibrechallenge.core.components.AsyncAvatarImage
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.viewmodels.ResultsViewModel
@@ -36,7 +37,8 @@ import com.santiago.fabricio.mercadolibrechallenge.theme.yellow
 @Composable
 fun SearchContent(
     navigateToResults: () -> Unit,
-    viewModel: ResultsViewModel
+    viewModel: ResultsViewModel,
+    navHostController: NavController,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
@@ -72,6 +74,7 @@ fun SearchContent(
 
         Button(
             onClick = {
+                navHostController.currentBackStackEntry?.savedStateHandle?.set("searchText", text)
                 viewModel.getResults(text)
                 navigateToResults()
             },

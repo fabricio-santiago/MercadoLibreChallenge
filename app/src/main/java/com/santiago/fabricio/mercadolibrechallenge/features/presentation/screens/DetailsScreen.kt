@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.santiago.fabricio.mercadolibrechallenge.R
 import com.santiago.fabricio.mercadolibrechallenge.core.components.CustomAppBar
+import com.santiago.fabricio.mercadolibrechallenge.core.data.remote.model.SearchData
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.components.DetailContent
 import com.santiago.fabricio.mercadolibrechallenge.features.presentation.state.ResultsState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetailScreen(
-    uiState: ResultsState,
-    index: Int,
+    searchData: SearchData?,
     navigateToResults: () -> Unit,
 ) {
 
@@ -28,8 +28,7 @@ fun DetailScreen(
         },
         content = { paddingValues ->
             DetailContent(
-                uiState = uiState,
-                index = index,
+                searchData = searchData,
                 paddingValues = paddingValues
             )
         })
